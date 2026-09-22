@@ -1,0 +1,31 @@
+================================================
+                BHARATIYA JANTA MART
+         Your Trusted E-Commerce Partner
+================================================
+Order ID: ORD1
+Date & Time: 2025-08-24 11:46:08
+Payment Method: Cash on Delivery
+------------------------------------------------
+Customer Name: riya
+Customer ID: CUST1
+Phone: 9876543210
+Address: amreli
+------------------------------------------------
+Item Name           Qty   Price   Amount   Seller
+------------------------------------------------
+pen                 5    28.5    142.5     zeel
+
+------------------------------------------------
+Subtotal: ₹142.5
+------------------------------------------------
+Grand Total (INR): ₹142.5
+------------------------------------------------
+Transaction ID: TXN1_1756061168883
+------------------------------------------------
+NOTE: Payment of ₹142.5 will be collected at delivery.
+Notes: Delivery expected in 3-5 business days.
+------------------------------------------------
+Thank you for shopping with us! 
+Track your order at: www.bharatiyajantamart.com/track/ORD1
+Helpline: 1800-123-456
+================================================

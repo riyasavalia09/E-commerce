@@ -1,0 +1,30 @@
+================================================
+                BHARATIYA JANTA MART
+         Your Trusted E-Commerce Partner
+================================================
+Order ID: ORD2
+Date & Time: 2025-08-24 11:47:02
+Payment Method: Wallet
+------------------------------------------------
+Customer Name: riya
+Customer ID: CUST1
+Phone: 9876543210
+Address: amreli
+------------------------------------------------
+Item Name           Qty   Price   Amount   Seller
+------------------------------------------------
+ball                7    55.0    385.0     zeel
+
+------------------------------------------------
+Subtotal: ₹385.0
+------------------------------------------------
+Grand Total (INR): ₹385.0
+------------------------------------------------
+Transaction ID: TXN2_1756061222152
+------------------------------------------------
+Notes: Delivery expected in 3-5 business days.
+------------------------------------------------
+Thank you for shopping with us! 
+Track your order at: www.bharatiyajantamart.com/track/ORD2
+Helpline: 1800-123-456
+================================================

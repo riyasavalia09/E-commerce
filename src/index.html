@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharatiya Janta Mart - E-Commerce Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+        }
+        
+        .btn-danger {
+            background-color: var(--secondary);
+            border: none;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .category-filter {
+            margin-bottom: 30px;
+        }
+        
+        .category-btn {
+            margin: 5px;
+        }
+        
+        .product-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .login-container, .register-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .dashboard-card {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .otp-timer {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .panel-section {
+            display: none;
+        }
+        
+        .active-panel {
+            display: block;
+        }
+        
+        .admin-table {
+            font-size: 0.9rem;
+        }
+        
+        .wallet-balance {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-store me-2"></i>Bharatiya Janta Mart
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link main-nav" href="#" data-panel="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link main-nav" href="#" data-panel="products">Products</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-panel="cart">
+                            <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger cart-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-panel="customer-login">Customer Login</a></li>
+                            <li><a class="dropdown-item" href="#" data-panel="seller-login">Seller Login</a></li>
+                            <li><a class="dropdown-item" href="#" data-panel="admin-login">Admin Login</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-panel="customer-register">Customer Register</a></li>
+                            <li><a class="dropdown-item" href="#" data-panel="seller-register">Seller Register</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Sections -->
+    <div class="container mt-4">
+        <!-- Home Panel -->
+        <div id="home-panel" class="panel-section active-panel">
+            <div class="hero-section rounded mb-5">
+                <h1 class="display-4">Welcome to Bharatiya Janta Mart</h1>
+                <p class="lead">Your Trusted E-Commerce Partner</p>
+                <a href="#" class="btn btn-primary btn-lg mt-3" data-panel="products">Shop Now</a>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>5000+</h3>
+                        <p>Products Available</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-users"></i>
+                        <h3>2000+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-truck"></i>
+                        <h3>500+</h3>
+                        <p>Orders Delivered</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Featured Products</h2>
+            <div class="row" id="featured-products">
+                <!-- Featured products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Products Panel -->
+        <div id="products-panel" class="panel-section">
+            <h2 class="section-title">Our Products</h2>
+            
+            <div class="category-filter text-center">
+                <button class="btn btn-outline-primary category-btn active" data-category="all">All</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Sport">Sport</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Electronics">Electronics</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Smart Home">Smart Home</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Stationery">Stationery</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Footwear">Footwear</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Fashion">Fashion</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Toy Shop">Toy Shop</button>
+                <button class="btn btn-outline-primary category-btn" data-category="Grocery Store">Grocery Store</button>
+            </div>
+            
+            <div class="row" id="products-container">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Cart Panel -->
+        <div id="cart-panel" class="panel-section">
+            <h2 class="section-title">Your Cart</h2>
+            
+            <div id="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Cart Summary</h5>
+                            <table class="table">
+                                <tr>
+                                    <td>Subtotal:</td>
+                                    <td class="text-end">₹<span id="cart-subtotal">0.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tax:</td>
+                                    <td class="text-end">₹<span id="cart-tax">0.00</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Total:</th>
+                                    <th class="text-end">₹<span id="cart-total">0.00</span></th>
+                                </tr>
+                            </table>
+                            <button class="btn btn-primary w-100" id="checkout-btn">Proceed to Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Login -->
+        <div id="customer-login-panel" class="panel-section">
+            <div class="login-container">
+                <h2 class="section-title">Customer Login</h2>
+                <form id="customer-login-form">
+                    <div class="mb-3">
+                        <label for="customer-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="customer-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customer-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="customer-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <div class="mt-3 text-center">
+                    <p>Don't have an account? <a href="#" data-panel="customer-register">Register here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Dashboard -->
+        <div id="customer-dashboard-panel" class="panel-section">
+            <h2 class="section-title">Customer Dashboard</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-wallet"></i>
+                        <h3>₹<span id="customer-wallet-balance">0.00</span></h3>
+                        <p>Wallet Balance</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3 id="customer-order-count">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-cart-plus"></i>
+                        <h3 class="cart-count">0</h3>
+                        <p>Cart Items</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card dashboard-card">
+                        <i class="fas fa-star"></i>
+                        <h3>4.8</h3>
+                        <p>Customer Rating</p>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="nav nav-tabs" id="customer-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#customer-orders">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#customer-profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#customer-wallet">Wallet</a>
+                </li>
+            </ul>
+            
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="customer-orders">
+                    <h4>Order History</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Products</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-orders-table">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="customer-profile">
+                    <h4>Profile Information</h4>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="customer-profile-form">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="profile-name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="profile-name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profile-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="profile-email" readonly>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="profile-phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="profile-phone">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profile-address" class="form-label">Address</label>
+                                        <textarea class="form-control" id="profile-address" rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="customer-wallet">
+                    <h4>Wallet Management</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Add Money to Wallet</h5>
+                                    <form id="add-money-form">
+                                        <div class="mb-3">
+                                            <label for="add-amount" class="form-label">Amount</label>
+                                            <input type="number" class="form-control" id="add-amount" min="1" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="payment-method" class="form-label">Payment Method</label>
+                                            <select class="form-select" id="payment-method" required>
+                                                <option value="">Select method</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Net Banking">Net Banking</option>
+                                                <option value="Card">Card</option>
+                                                <option value="Gift Card">Gift Card</option>
+                                            </select>
+                                        </div>
+                                        <div id="payment-details"></div>
+                                        <button type="submit" class="btn btn-primary w-100">Add Money</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Transaction History</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Type</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="wallet-transactions">
+                                                <!-- Transactions will be loaded here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional panels for Seller, Admin, Registration, etc. would follow similar patterns -->
+        
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Bharatiya Janta Mart</h5>
+                    <p>Your Trusted E-Commerce Partner</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" data-panel="home">Home</a></li>
+                        <li><a href="#" data-panel="products">Products</a></li>
+                        <li><a href="#" data-panel="customer-register">Register</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>Email: support@bharatiyajantamart.com</p>
+                    <p>Phone: 1800-123-456</p>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center">© 2023 Bharatiya Janta Mart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div class="modal fade" id="otpModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">OTP Verification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>An OTP has been sent to your registered email. It is valid for <span class="otp-timer">30</span> seconds.</p>
+                    <div class="mb-3">
+                        <label for="otp-input" class="form-label">Enter OTP</label>
+                        <input type="text" class="form-control" id="otp-input" placeholder="Enter 6-digit OTP">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="verify-otp">Verify</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="product-modal-title">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Product Image" id="product-modal-image">
+                        </div>
+                        <div class="col-md-6">
+                            <h3 id="product-modal-name"></h3>
+                            <p class="text-muted" id="product-modal-seller"></p>
+                            <div class="d-flex align-items-center mb-3">
+                                <h4 class="text-primary me-3" id="product-modal-price"></h4>
+                                <s class="text-muted" id="product-modal-mrp"></s>
+                                <span class="badge bg-danger ms-2" id="product-modal-discount"></span>
+                            </div>
+                            <p id="product-modal-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies ultricies, nunc nisl aliquam nunc, eget aliquam nisl nunc eu nisl.</p>
+                            <div class="mb-3">
+                                <label for="product-quantity" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="product-quantity" value="1" min="1">
+                            </div>
+                            <button class="btn btn-primary w-100" id="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data - in a real application, this would come from your backend
+        const sampleProducts = [
+            {
+                id: 1,
+                name: "Wireless Headphones",
+                category: "Electronics",
+                seller: "ElectroHub",
+                mrp: 2999,
+                price: 1999,
+                image: "https://via.placeholder.com/400x300?text=Headphones",
+                stock: 15,
+                description: "High-quality wireless headphones with noise cancellation and 20-hour battery life."
+            },
+            {
+                id: 2,
+                name: "Running Shoes",
+                category: "Sport",
+                seller: "SportyFeet",
+                mrp: 4999,
+                price: 3499,
+                image: "https://via.placeholder.com/400x300?text=Running+Shoes",
+                stock: 8,
+                description: "Comfortable running shoes with extra cushioning and breathable material."
+            },
+            {
+                id: 3,
+                name: "Smart Watch",
+                category: "Electronics",
+                seller: "TechGadgets",
+                mrp: 8999,
+                price: 7499,
+                image: "https://via.placeholder.com/400x300?text=Smart+Watch",
+                stock: 12,
+                description: "Feature-rich smartwatch with heart rate monitoring and GPS tracking."
+            },
+            {
+                id: 4,
+                name: "Kitchen Mixer",
+                category: "Smart Home",
+                seller: "HomeEssentials",
+                mrp: 4599,
+                price: 3899,
+                image: "https://via.placeholder.com/400x300?text=Mixer",
+                stock: 6,
+                description: "Powerful kitchen mixer with multiple speed settings and various attachments."
+            }
+        ];
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Update cart count
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+            return count;
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            document.querySelectorAll('.main-nav, .dropdown-item, [data-panel]').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const panelId = this.getAttribute('data-panel');
+                    showPanel(panelId);
+                });
+            });
+            
+            // Load featured products
+            loadFeaturedProducts();
+            
+            // Load all products
+            loadProducts();
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Category filter
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterProducts(this.getAttribute('data-category'));
+                });
+            });
+            
+            // Payment method change
+            document.getElementById('payment-method').addEventListener('change', function() {
+                const method = this.value;
+                const detailsDiv = document.getElementById('payment-details');
+                detailsDiv.innerHTML = '';
+                
+                if (method === 'UPI') {
+                    detailsDiv.innerHTML = `
+                        <div class="mb-3">
+                            <label for="upi-id" class="form-label">UPI ID</label>
+                            <input type="text" class="form-control" id="upi-id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="upi-pin" class="form-label">UPI PIN</label>
+                            <input type="password" class="form-control" id="upi-pin" required>
+                        </div>
+                    `;
+                } else if (method === 'Net Banking') {
+                    detailsDiv.innerHTML = `
+                        <div class="mb-3">
+                            <label for="bank-name" class="form-label">Bank Name</label>
+                            <input type="text" class="form-control" id="bank-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="account-last4" class="form-label">Last 4 Digits of Account</label>
+                            <input type="text" class="form-control" id="account-last4" required maxlength="4">
+                        </div>
+                    `;
+                } else if (method === 'Card') {
+                    detailsDiv.innerHTML = `
+                        <div class="mb-3">
+                            <label for="card-last4" class="form-label">Last 4 Digits of Card</label>
+                            <input type="text" class="form-control" id="card-last4" required maxlength="4">
+                        </div>
+                        <div class="mb-3">
+                            <label for="card-expiry" class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" id="card-expiry" placeholder="MM/YY" required>
+                        </div>
+                    `;
+                } else if (method === 'Gift Card') {
+                    detailsDiv.innerHTML = `
+                        <div class="mb-3">
+                            <label for="gift-card-code" class="form-label">Gift Card Code</label>
+                            <input type="text" class="form-control" id="gift-card-code" required>
+                        </div>
+                    `;
+                }
+            });
+        });
+        
+        // Show specific panel
+        function showPanel(panelId) {
+            // Hide all panels
+            document.querySelectorAll('.panel-section').forEach(panel => {
+                panel.classList.remove('active-panel');
+            });
+            
+            // Show the requested panel
+            const panel = document.getElementById(panelId + '-panel');
+            if (panel) {
+                panel.classList.add('active-panel');
+                
+                // If it's the cart panel, load cart items
+                if (panelId === 'cart') {
+                    loadCartItems();
+                }
+                
+                // If it's the customer dashboard, load customer data
+                if (panelId === 'customer-dashboard') {
+                    loadCustomerData();
+                }
+            }
+        }
+        
+        // Load featured products
+        function loadFeaturedProducts() {
+            const container = document.getElementById('featured-products');
+            container.innerHTML = '';
+            
+            sampleProducts.slice(0, 3).forEach(product => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4';
+                col.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="text-muted">${product.seller}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h5 text-primary">₹${product.price}</span>
+                                    <s class="text-muted">₹${product.mrp}</s>
+                                </div>
+                                <span class="badge bg-success">${Math.round((1 - product.price/product.mrp) * 100)}% off</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <button class="btn btn-primary w-100 view-product" data-id="${product.id}">View Product</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+            
+            // Add event listeners to view product buttons
+            document.querySelectorAll('.view-product').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const product = sampleProducts.find(p => p.id == productId);
+                    showProductModal(product);
+                });
+            });
+        }
+        
+        // Load all products
+        function loadProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            sampleProducts.forEach(product => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4 product-item';
+                col.setAttribute('data-category', product.category);
+                col.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="text-muted">${product.seller}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h5 text-primary">₹${product.price}</span>
+                                    <s class="text-muted">₹${product.mrp}</s>
+                                </div>
+                                <span class="badge bg-success">${Math.round((1 - product.price/product.mrp) * 100)}% off</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <button class="btn btn-primary w-100 view-product" data-id="${product.id}">View Product</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+            
+            // Add event listeners to view product buttons
+            document.querySelectorAll('.view-product').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const product = sampleProducts.find(p => p.id == productId);
+                    showProductModal(product);
+                });
+            });
+        }
+        
+        // Filter products by category
+        function filterProducts(category) {
+            document.querySelectorAll('.product-item').forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        // Show product modal
+        function showProductModal(product) {
+            document.getElementById('product-modal-title').textContent = product.name;
+            document.getElementById('product-modal-name').textContent = product.name;
+            document.getElementById('product-modal-seller').textContent = `Sold by: ${product.seller}`;
+            document.getElementById('product-modal-price').textContent = `₹${product.price}`;
+            document.getElementById('product-modal-mrp').textContent = `₹${product.mrp}`;
+            document.getElementById('product-modal-discount').textContent = `${Math.round((1 - product.price/product.mrp) * 100)}% OFF`;
+            document.getElementById('product-modal-image').src = product.image;
+            document.getElementById('product-modal-description').textContent = product.description;
+            document.getElementById('product-quantity').value = 1;
+            document.getElementById('product-quantity').setAttribute('max', product.stock);
+            
+            // Set up add to cart button
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            addToCartBtn.onclick = function() {
+                const quantity = parseInt(document.getElementById('product-quantity').value);
+                addToCart(product, quantity);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+                modal.hide();
+            };
+            
+            // Show the modal
+            const productModal = new bootstrap.Modal(document.getElementById('productModal'));
+            productModal.show();
+        }
+        
+        // Add product to cart
+        function addToCart(product, quantity) {
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    seller: product.seller,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Show success message
+            showToast('Product added to cart!', 'success');
+        }
+        
+        // Load cart items
+        function loadCartItems() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-info text-center">
+                        Your cart is empty. <a href="#" data-panel="products">Start shopping</a>!
+                    </div>
+                `;
+                
+                // Add event listener to the link
+                const link = container.querySelector('a');
+                if (link) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showPanel('products');
+                    });
+                }
+                
+                // Set summary values to 0
+                document.getElementById('cart-subtotal').textContent = '0.00';
+                document.getElementById('cart-tax').textContent = '0.00';
+                document.getElementById('cart-total').textContent = '0.00';
+                
+                return;
+            }
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="${item.image}" alt="${item.name}" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-4">
+                            <h5>${item.name}</h5>
+                            <p class="text-muted mb-0">${item.seller}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="mb-0">₹${item.price}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                        </div>
+                        <div class="col-md-2">
+                            <p class="mb-0 fw-bold">₹${itemTotal.toFixed(2)}</p>
+                            <button class="btn btn-sm btn-danger remove-item" data-id="${item.id}">Remove</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+            
+            // Calculate totals
+            const tax = subtotal * 0.18; // 18% tax
+            const total = subtotal + tax;
+            
+            document.getElementById('cart-subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('cart-tax').textContent = tax.toFixed(2);
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+            
+            // Add event listeners to quantity inputs
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const id = this.getAttribute('data-id');
+                    const quantity = parseInt(this.value);
+                    updateCartItemQuantity(id, quantity);
+                });
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    removeCartItem(id);
+                });
+            });
+            
+            // Add event listener to checkout button
+            document.getElementById('checkout-btn').addEventListener('click', function() {
+                // In a real app, this would redirect to checkout
+                showToast('Proceeding to checkout!', 'success');
+            });
+        }
+        
+        // Update cart item quantity
+        function updateCartItemQuantity(id, quantity) {
+            if (quantity < 1) {
+                removeCartItem(id);
+                return;
+            }
+            
+            const item = cart.find(item => item.id == id);
+            if (item) {
+                item.quantity = quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCartItems();
+                updateCartCount();
+            }
+        }
+        
+        // Remove item from cart
+        function removeCartItem(id) {
+            cart = cart.filter(item => item.id != id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCartItems();
+            updateCartCount();
+            showToast('Item removed from cart', 'info');
+        }
+        
+        // Load customer data
+        function loadCustomerData() {
+            // In a real app, this would come from your backend API
+            document.getElementById('customer-wallet-balance').textContent = '1250.00';
+            document.getElementById('customer-order-count').textContent = '5';
+            
+            // Load orders
+            const ordersTable = document.getElementById('customer-orders-table');
+            ordersTable.innerHTML = `
+                <tr>
+                    <td>ORD12345</td>
+                    <td>2023-08-15</td>
+                    <td>Wireless Headphones (x1)</td>
+                    <td>₹1999.00</td>
+                    <td><span class="badge bg-success">Delivered</span></td>
+                    <td><button class="btn btn-sm btn-primary">View</button></td>
+                </tr>
+                <tr>
+                    <td>ORD12346</td>
+                    <td>2023-08-20</td>
+                    <td>Running Shoes (x1)</td>
+                    <td>₹3499.00</td>
+                    <td><span class="badge bg-warning">Processing</span></td>
+                    <td><button class="btn btn-sm btn-primary">View</button></td>
+                </tr>
+            `;
+            
+            // Load wallet transactions
+            const walletTransactions = document.getElementById('wallet-transactions');
+            walletTransactions.innerHTML = `
+                <tr>
+                    <td>2023-08-10</td>
+                    <td>₹1000.00</td>
+                    <td>Credit</td>
+                    <td>Wallet recharge via UPI</td>
+                </tr>
+                <tr>
+                    <td>2023-08-15</td>
+                    <td>₹1999.00</td>
+                    <td>Debit</td>
+                    <td>Payment for order ORD12345</td>
+                </tr>
+                <tr>
+                    <td>2023-08-18</td>
+                    <td>₹500.00</td>
+                    <td>Credit</td>
+                    <td>Refund for cancelled order</td>
+                </tr>
+                <tr>
+                    <td>2023-08-20</td>
+                    <td>₹749.00</td>
+                    <td>Credit</td>
+                    <td>Wallet recharge via Net Banking</td>
+                </tr>
+            `;
+            
+            // Set profile information
+            document.getElementById('profile-name').value = 'John Doe';
+            document.getElementById('profile-email').value = 'john.doe@example.com';
+            document.getElementById('profile-phone').value = '+91 9876543210';
+            document.getElementById('profile-address').value = '123 Main Street, Mumbai, Maharashtra 400001';
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            // Create toast container if it doesn't exist
+            if (!document.getElementById('toast-container')) {
+                const toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                toastContainer.className = 'position-fixed bottom-0 end-0 p-3';
+                toastContainer.style.zIndex = '11';
+                document.body.appendChild(toastContainer);
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            // Remove toast after it's hidden
+            toast.addEventListener('hidden.bs.toast', function() {
+                toast.remove();
+            });
+        }
+    </script>
+</body>
+</html>
