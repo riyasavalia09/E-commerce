@@ -111,7 +111,9 @@ A custom "Stack" implementation is also included to demonstrate stack-based data
 E-Commerce/
 │
 ├── src/
+│   │
 │   ├── ECommerce/
+│   │   │
 │   │   ├── DBMS/
 │   │   │   ├── DBConnection.java
 │   │   │   └── Table.java
@@ -137,8 +139,6 @@ E-Commerce/
 │
 ├── .gitignore
 └── README.md
-
----
 
 ## Database Setup
 
@@ -200,55 +200,55 @@ The application will start from the main entry point.
 ## System Flow
 
 User
- │
- ├── Customer
- │    ├── Register / Login
- │    ├── Browse Products
- │    ├── Add to Cart
- │    ├── Place Order
- │    └── Generate Bill
- │
- ├── Seller
- │    └── Manage Products / Orders
- │
- └── Admin
-      └── Manage System Operations
+  │
+  ├── Customer
+  │     ├── Register / Login
+  │     ├── Browse Products
+  │     ├── Add to Cart
+  │     ├── Place Order
+  │     └── Generate Bill
+  │
+  ├── Seller
+  │     ├── Seller Operations
+  │     ├── Manage Products
+  │     └── Manage Orders
+  │
+  └── Admin
+        └── Manage System Operations
 
-             │
-             ▼
+                │
+                ▼
 
         Java Application
-             │
-       ┌─────┴─────┐
-       │           │
- Data Structures  JDBC
-       │           │
-       └─────┬─────┘
-             ▼
-          MySQL
-
+                │
+        ┌───────┴────────┐
+        │                │
+        ▼                ▼
+  Data Structures       JDBC
+                         │
+                         ▼
+                      MySQL
 ---
 
 ## Important Files
 
-File| Purpose
-"Main.java"| Main entry point of the application
-"DBConnection.java"| Handles database connectivity
-"Table.java"| Database/table-related operations
-"BillingSystem.java"| Handles billing functionality
-"CartItem.java"| Represents cart items
-"User.java"| User-related model
-"customer.java"| Customer operations
-"seller.java"| Seller operations
-"admin.java"| Admin operations
-"otp.java"| OTP-related functionality
-"validator.java"| Validation functionality
-"DoubleLinkedList.java"| Custom doubly linked list
-"Stack.java"| Custom stack implementation
-"ecommerce.sql"| Database schema and data
-"index.html"| Basic web interface
-
----
+| File | Description |
+|------|-------------|
+| `Main.java` | Main entry point of the E-Commerce application |
+| `DBConnection.java` | Establishes the connection between the Java application and MySQL database |
+| `Table.java` | Handles database table-related operations |
+| `BillingSystem.java` | Manages billing and bill generation functionality |
+| `CartItem.java` | Represents products/items added to the shopping cart |
+| `User.java` | Contains common user-related information and functionality |
+| `customer.java` | Handles customer-related operations |
+| `seller.java` | Handles seller-related operations |
+| `admin.java` | Handles administrator-related operations |
+| `otp.java` | Handles OTP-related functionality |
+| `validator.java` | Provides input and user validation functionality |
+| `DoubleLinkedList.java` | Custom implementation of a Doubly Linked List |
+| `Stack.java` | Custom implementation of a Stack data structure |
+| `ecommerce.sql` | Contains the MySQL database structure and required data |
+| `index.html` | Provides the basic HTML-based web interface |
 
 ## Learning Objectives
 
