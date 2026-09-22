@@ -105,9 +105,9 @@ The project contains a custom "DoubleLinkedList" implementation for managing dat
 A custom "Stack" implementation is also included to demonstrate stack-based data management.
 
 ---
+## 📂 Project Structure
 
-## Project Structure
-
+```text
 E-Commerce/
 │
 ├── src/
@@ -139,7 +139,8 @@ E-Commerce/
 │
 ├── .gitignore
 └── README.md
-
+```
+---
 ## Database Setup
 
 The project uses MySQL as its database.
@@ -197,37 +198,56 @@ The application will start from the main entry point.
 
 ---
 
-## System Flow
+##  System Flow
 
-User
-  │
-  ├── Customer
-  │     ├── Register / Login
-  │     ├── Browse Products
-  │     ├── Add to Cart
-  │     ├── Place Order
-  │     └── Generate Bill
-  │
-  ├── Seller
-  │     ├── Seller Operations
-  │     ├── Manage Products
-  │     └── Manage Orders
-  │
-  └── Admin
-        └── Manage System Operations
-
+```text
+                         ┌──────────────┐
+                         │     User     │
+                         └──────┬───────┘
+                                │
+                 ┌──────────────┼──────────────┐
+                 │              │              │
+                 ▼              ▼              ▼
+          ┌───────────┐  ┌───────────┐  ┌───────────┐
+          │ Customer  │  │  Seller   │  │   Admin   │
+          └─────┬─────┘  └─────┬─────┘  └─────┬─────┘
+                │              │              │
+                ▼              ▼              ▼
+          Register /      Seller          Admin
+             Login       Operations      Operations
+                │              │              │
+                ▼              ▼              ▼
+          Browse Products  Manage       Manage
+                │          Products      System
+                ▼              │
+          Add to Cart         ▼
+                │          Manage Orders
+                ▼
+          Place Order
                 │
                 ▼
-
-        Java Application
+          Generate Bill
                 │
-        ┌───────┴────────┐
-        │                │
-        ▼                ▼
-  Data Structures       JDBC
-                         │
-                         ▼
-                      MySQL
+                └──────────────┬──────────────┘
+                               ▼
+                    ┌────────────────────┐
+                    │   Java Application │
+                    └─────────┬──────────┘
+                              │
+                    ┌─────────┴─────────┐
+                    │                   │
+                    ▼                   ▼
+             ┌────────────┐      ┌────────────┐
+             │    Data    │      │    JDBC    │
+             │ Structures │      │ Connection │
+             └────────────┘      └─────┬──────┘
+                                       │
+                                       ▼
+                                ┌────────────┐
+                                │   MySQL    │
+                                │  Database  │
+                                └────────────┘
+```
 ---
 
 ## Important Files
@@ -287,7 +307,7 @@ The project can be further enhanced by adding:
 ---
 
 
-👩‍💻 Project Type
+ Project Type
 
 Academic / Educational Project
 
