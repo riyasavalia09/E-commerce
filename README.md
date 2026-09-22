@@ -1,4 +1,4 @@
-## E-Commerce Management System
+## BHARATIYA JANATA MART : E-Commerce Management System
 
 A Java-based E-Commerce Management System designed to manage customers, sellers, products, carts, orders, billing, and database operations. The project demonstrates the practical use of Java, MySQL, Object-Oriented Programming, Data Structures, and DBMS concepts in an e-commerce environment.
 
